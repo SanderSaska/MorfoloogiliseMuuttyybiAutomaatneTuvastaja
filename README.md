@@ -1,0 +1,2 @@
+# MorfoloogiliseMuuttyybiAutomaatneTuvastaja
+Morfoloogilise muuttüübi automaatne tuvastaja
