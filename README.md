@@ -10,7 +10,7 @@ Sõnaliigiga sõnamudel on võimeline ennustama ka muutumatudele sõnadele õige
 
 #### Kasutamine
 
-Kood, millega ennustada muuttüüpe asub III osa muuttüübi tuvastaja *.ipynb* failis alampeatükis "Ennustamine". Kõik koodijupid on vajalikud selles peatükis, et mudelit saaks kasutada.
+Kood, millega ennustada muuttüüpe asub [III osa muuttüübi tuvastaja *.ipynb* failis](Morfoloogilise_muuttüübi_automaatne_tuvastamine_I_osa.ipynb) alampeatükis "Ennustamine". Kõik koodijupid on vajalikud selles peatükis, et mudelit saaks kasutada.
 
 Funktsioon, millega ennustada muuttüüpi on `leia_muuttüüp(sõna, sõnaliik = '')`.
 
