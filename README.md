@@ -24,5 +24,18 @@ Sõnaliigiga sõnamudel võtab lisaks sõna kirjapildile ka üldisema sõnaliigi
 
 Sisend peab olema kujul `sõna = [sõna_1, sõna_2, ...], sõnaliik = [sõnaliik_1, sõnaliik_2, ...]`.
 
+##### Moodulite versioonid
+
+* nltk: 3.8.1
+* estnltk: 1.7.2
+* pandas: 2.0.3
+* numpy: 1.25.2
+* sklearn: 1.2.2
+* tensorflow: 2.15.0
+* matplotlib: 3.7.1
+* keras_tuner: 1.4.7
+* transformers: 4.40.2
+
+
 [^1]: Ü. Viks. Väike vormisõnastik. I: Sissejuhatus & grammatika, II: Sõnastik & lisad. Tallinn: Eesti Teaduste Akadeemia. 1992.
 [^2]: H. -J. Kaalep, R. Prillop ja T. Vaino. Vabamorf. Filosoft. 2022. [https://github.com/Filosoft/vabamorf](https://github.com/Filosoft/vabamorf) (15.05.2024)
