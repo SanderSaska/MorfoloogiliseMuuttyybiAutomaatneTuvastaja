@@ -28,7 +28,7 @@ Kood, millega ennustada muuttüüpe asub [muuttüübi tuvastaja *.ipynb* failis]
 
 #### Python
 
-Näide mudelite kasutamisest on [Pythoni failis](muuttyybi_tuvastaja_example.py). Veenduge, et Teie lokaalses arvutis on Python koos [vajalike teekidega](#moodulite-versioonid-muuttüübi-tuvastajas) olemas.
+Näide mudelite kasutamisest on [Pythoni failis](muuttyybi_tuvastaja_example.py). Veenduge, et Teie lokaalses arvutis on Python koos [vajalike teekidega](#moodulite-versioonid-pythoni-muuttüübi-tuvastajas) olemas.
 
 ##### Moodulite versioonid Google Colabis
 
