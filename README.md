@@ -42,7 +42,7 @@ Näide mudelite kasutamisest on [Pythoni failis](muuttyybi_tuvastaja_example.py)
 * keras_tuner: 1.4.7
 * transformers: 4.40.2
 
-##### Moodulite versioonid muuttüübi tuvastajas
+##### Moodulite versioonid Pythoni muuttüübi tuvastajas
 
 * pandas: 2.1.4
 * numpy: 1.26.4
