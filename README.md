@@ -24,7 +24,6 @@ Sisend peab olema kujul `sõna = [sõna_1, sõna_2, ...], sõnaliik = [sõnaliik
 
 Vastus on kujul `['muuttüübi_number_1', 'muuttüübi_number_2', ...]`, kus muuttüüp `muuttüübi_number` vastaval indeksil $i$ vastab sisendjärjendis indeksil $i$ olevale sõnale.
 
-
 **Mudelid on kättesaadavad [siit](https://github.com/SanderSaska/MorfoloogiliseMuuttyybiAutomaatneTuvastaja/releases/latest).**
 
 #### Jupyter Notebook
