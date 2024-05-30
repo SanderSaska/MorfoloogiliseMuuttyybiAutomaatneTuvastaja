@@ -167,12 +167,11 @@ def leia_muuttyyp(sõna, sõnaliik = ''):
   # Mudeli leidmine
   try:
     if sõnaliik: # Sõnaliigiga sõnamudel
-      mudeli_path = './Sonaliigiga_sonamudel/sonaliigiga_sonamudel.keras'
+      mudel = mudel_init_sõnaliigiga()
     else: # Sõnamudel
-      mudeli_path = './Sonamudel/sonamudel.keras'
-    mudel = tf.keras.models.load_model(mudeli_path)
-  except OSError as e:
-    print(f"{mudeli_path} ei ole mudel")
+      mudel = mudel_init()
+  except Exception as e:
+    print("Mudeli laadimine ebaõnnestus")
     return
 
   # TextVectorization
