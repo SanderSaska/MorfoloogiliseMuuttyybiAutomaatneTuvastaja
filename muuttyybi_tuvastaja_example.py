@@ -19,37 +19,6 @@ def get_mlb_w():
   return mlb_w
 
 def get_mlb_s_üldisem():
-  pos_to_group = {
-        "['A']": 'n',  # omadussõna - algvõrre (adjektiiv - positiiv), nii käänduvad kui käändumatud, nt kallis või eht, Adjective
-        "['C']": 'n',  # omadussõna - keskvõrre (adjektiiv - komparatiiv), nt laiem, Comparative adjective
-        "['D']": 'u',  # määrsõna (adverb), nt kõrvuti, Adverb
-        "['G']": 'u',  # genitiivatribuut (käändumatu omadussõna), nt balti, Genitive attribute
-        "['H']": 'n',  # pärisnimi, nt Edgar, Proper noun
-        "['I']": 'u',  # hüüdsõna (interjektsioon), nt tere, Interjection
-        "['J']": 'u',  # sidesõna (konjunktsioon), nt ja, Conjunction
-        "['K']": 'u',  # kaassõna (pre/postpositsioon), nt kaudu, Pre/postposition
-        "['N']": 'n',  # põhiarvsõna (kardinaalnumeraal), nt kaks, Cardinal numeral
-        "['O']": 'n',  # järgarvsõna (ordinaalnumeraal), nt teine, Ordinal numeral
-        "['P']": 'n',  # asesõna (pronoomen), nt see, Pronoun
-        "['S']": 'n',  # nimisõna (substantiiv), nt asi, Noun
-        "['U']": 'n',  # omadussõna - ülivõrre (adjektiiv - superlatiiv), nt pikim, Superlative adjective
-        "['V']": 'v',  # tegusõna (verb), nt lugema, Verb
-        "['X']": 'u',  # verbi juurde kuuluv sõna, millel eraldi sõnaliigi tähistus puudub, nt plehku, Adverb-like word used solely with a certain verb
-        "['Y']": 'n',  # lühend, nt USA, Abbreviation or acronym
-        "['Z']": 'u',  # lausemärk, nt -, /, ..., Punctuation
-        # Siit alates lisaks statistikast leitud read
-        "['S', 'S']": 'n',
-        "['A', 'A']": 'n',
-        "['S', 'I']": 'n',
-        "['V', 'V']": 'v',
-        "['D', 'K']": 'u',
-        "['H', 'H']": 'n',
-        "['P', 'P']": 'n',
-        "['S', 'A']": 'n',
-        "['K', 'D']": 'u',
-        "['A', 'S']": 'n',
-    }
-
   filename = 'Binarizers/mlb_s.pkl'
 
   if os.path.exists(filename):
@@ -167,12 +136,11 @@ def leia_muuttyyp(sõna, sõnaliik = ''):
   # Mudeli leidmine
   try:
     if sõnaliik: # Sõnaliigiga sõnamudel
-      mudeli_path = './Sonaliigiga_sonamudel/sonaliigiga_sonamudel.keras'
+      mudel = mudel_init_sõnaliigiga()
     else: # Sõnamudel
-      mudeli_path = './Sonamudel/sonamudel.keras'
-    mudel = tf.keras.models.load_model(mudeli_path)
-  except OSError as e:
-    print(f"{mudeli_path} ei ole mudel")
+      mudel = mudel_init()
+  except Exception as e:
+    print("Mudeli laadimine ebaõnnestus")
     return
 
   # TextVectorization
@@ -183,13 +151,13 @@ def leia_muuttyyp(sõna, sõnaliik = ''):
   X_w = tekst_vect(sõna)
 
   # Muuttüübid
-  mlb_w = get_mlb_w(df_algvormidega)
+  mlb_w = get_mlb_w()
   if not mlb_w:
     print("Paiguta mlb_w.pkl Binarizers kausta")
 
   # Sõnaliigid
   if sõnaliik:
-    mlb_s = get_mlb_s_üldisem(df_algvormidega)
+    mlb_s = get_mlb_s_üldisem()
     if not mlb_s:
       print("Paiguta mlb_s.pkl Binarizers kausta")
       return
