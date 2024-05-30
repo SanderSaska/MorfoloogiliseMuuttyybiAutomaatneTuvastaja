@@ -6,10 +6,9 @@ import pandas as pd
 import numpy as np
 import sklearn as sk
 import tensorflow as tf
-import logging
 import os
 
-def get_mlb_w(df_algvormidega):
+def get_mlb_w():
   filename = 'Binarizers/mlb_w.pkl'
   if os.path.exists(filename):
     with open(filename, 'rb') as file:
@@ -19,7 +18,7 @@ def get_mlb_w(df_algvormidega):
     return None
   return mlb_w
 
-def get_mlb_s_üldisem(df_algvormidega):
+def get_mlb_s_üldisem():
   pos_to_group = {
         "['A']": 'n',  # omadussõna - algvõrre (adjektiiv - positiiv), nii käänduvad kui käändumatud, nt kallis või eht, Adjective
         "['C']": 'n',  # omadussõna - keskvõrre (adjektiiv - komparatiiv), nt laiem, Comparative adjective
@@ -81,6 +80,85 @@ def tekst_vect_failid():
     return None
 
   return tekst_vect
+
+def mudel_init():
+  tf.random.set_seed(7)
+
+  # Parameetrid
+  sõnavara_suurus = 67 # Sõnastiku suurus
+  output_dim = 49 # Ennustatavate klasside arv
+  max_pikkus = 20 # Vektori suurus
+
+  mudel = tf.keras.models.Sequential()
+
+  # Sisend
+  mudel.add(tf.keras.layers.Input(shape=(max_pikkus, )))
+
+  # Embedding
+  mudel.add(tf.keras.layers.Embedding(input_dim=sõnavara_suurus, output_dim=output_dim, mask_zero=True))
+
+  # LSTM
+  mudel.add(tf.keras.layers.LSTM(160, return_sequences=False))
+
+  # Dropout
+  mudel.add(tf.keras.layers.Dropout(0.0))
+
+  # Dense
+  mudel.add(tf.keras.layers.Dense(output_dim, activation='softmax'))
+
+  # Konfigureeri
+  mudel.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001), loss='categorical_crossentropy', metrics=['accuracy'])
+
+  # Treenitud mudeli kaalud
+  mudel.load_weights("./Sonamudel/sonamudel_weights.h5")
+
+  return mudel
+
+def mudel_init_sõnaliigiga():
+  # https://www.tensorflow.org/guide/keras/functional_api#models_with_multiple_inputs_and_outputs
+  tf.random.set_seed(7)
+
+  # Parameetrid
+  sõnavara_suurus = 67 # Sõnastiku suurus
+  output_dim_w = 49 # Ennustatavate klasside arv
+  output_dim_s = 3 # Sõnaliikide klasside arv
+  max_pikkus = 20 # Vektori suurus
+
+  # Sisendid
+  sõna_input = tf.keras.layers.Input(shape=(max_pikkus,), name='sona')
+  sõnaliik_input = tf.keras.layers.Input(shape=(output_dim_s,), name='sonaliik')
+
+  # Embeddings
+  sõna_features = tf.keras.layers.Embedding(sõnavara_suurus, output_dim_w)(sõna_input)
+  sõnaliik_features  = tf.keras.layers.Embedding(output_dim_s, output_dim_w)(sõnaliik_input)
+
+  # LSTMs
+  sõna_features = tf.keras.layers.LSTM(256)(sõna_features)
+  sõnaliik_features = tf.keras.layers.LSTM(256)(sõnaliik_features)
+
+  # Dropout
+  sõna_features = tf.keras.layers.Dropout(0.2)(sõna_features)
+  sõnaliik_features = tf.keras.layers.Dropout(0.2)(sõnaliik_features)
+
+  # Merge
+  x = tf.keras.layers.concatenate([sõna_features, sõnaliik_features])
+
+  # Dense
+  muuttüüp_pred = tf.keras.layers.Dense(output_dim_w, activation='softmax')(x)
+
+  # Mudeli sisendid ja väljund
+  mudel = tf.keras.Model(
+      inputs=[sõna_input, sõnaliik_input],
+      outputs=[muuttüüp_pred]
+  )
+
+  # Konfigureeri
+  mudel.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001), loss='categorical_crossentropy', metrics=['accuracy'])
+
+  # Treenitud mudeli kaalud
+  mudel.load_weights("./Sonaliigiga_sonamudel/sonaliigiga_sonamudel_weights.h5")
+
+  return mudel
 
 def leia_muuttyyp(sõna, sõnaliik = ''):
 
